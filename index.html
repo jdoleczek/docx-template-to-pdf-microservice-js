@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Testowanie DOCX do PDF</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js" integrity="sha384-vhJnz1OVIdLktyixHY4Uk3OHEwdQqPppqYR8+5mjsauETgLOcEynD9oPHhhz18Nw" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.2/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/http-vue-loader@1.4.0/src/httpVueLoader.min.js"></script>
+  </head>
+  <body>
+    <div id="test"></div>
+    <script language="JavaScript">
+      Vue.use(httpVueLoader)
+
+      new Vue({
+        el: '#test',
+        template: `
+          <div class="container">
+            <h1>DOCX template to PDF - example of endpoint usage</h1>
+            <hr />
+            <p>
+              Select <strong>template-example.docx</strong> file add fill fields below.
+            </p>
+            <div class="row form-group">
+              <div class="col-md-2">
+                <label>Name:</label>
+                <input type="text" class="form-control" v-model="person.name" />
+              </div>
+              <div class="col-md-2">
+                <label>Surname:</label>
+                <input type="text" class="form-control" v-model="person.surname" />
+              </div>
+              <div class="col-md-4">
+                <label>Title:</label>
+                <input type="text" class="form-control" v-model="title" />
+              </div>
+              <div class="col-md-4">
+                <label>Szablon:</label>
+                <input type="file" ref="file" class="hidden" v-model="file" />
+                <div>
+                  <button class="btn btn-success" @click="$refs.file.click()">Select DOCX template</button>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-success" @click="get" :disabled="!file">Generate</button>
+            </div>
+            <div v-if="payload">
+              <h3>Payload</h3>
+              <pre>{{ payload }}</pre>
+            </div>
+            <div v-if="res">
+              <h3>Response</h3>
+              <pre>{{ res }}</pre>
+            </div>
+          </div>
+        `,
+        data () {
+          return {
+            person: {
+              name: 'Jan',
+              surname: 'Kowalski'
+            },
+            title: 'Przezawodnik miesiąca',
+            file: null,
+            payload: null,
+            res: null,
+          }
+        },
+        methods: {
+          get () {
+            var reader = new FileReader()
+
+            reader.onload = () => {
+              this.payload = {
+                data: {
+                  person: this.person,
+                  title: this.title,
+                },
+                file: reader.result.split(',')[1]
+              }
+
+              $.ajax({
+                url: '/docx/pdf',
+                type: 'POST',
+                data: JSON.stringify(this.payload),
+                contentType: 'application/json',
+              })
+                .then(data => {
+                  this.res = data
+
+                  if (data.file) {
+                    let blob = new Blob(
+                      [new Uint8Array([...atob(data.file)].map(c => c.charCodeAt(0)))],
+                      {type: 'application/octet-stream'}
+                    )
+
+                    let dl = document.createElement('a')
+                    dl.download = `${this.title} - ${this.person.name} ${this.person.surname}.pdf`
+                    dl.href = URL.createObjectURL(blob)
+                    document.body.appendChild(dl)
+                    dl.click()
+                    dl.remove()
+                  }
+                })
+            }
+
+            reader.readAsDataURL(this.$refs.file.files[0])
+          },
+        }
+      })
+    </script>
+  </body>
+</html>

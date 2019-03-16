@@ -1,0 +1,17 @@
+{
+  "name": "docx2pdf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "docx-templates": "^3.0.0",
+    "express": "^4.16.4",
+    "office-to-pdf": "^4.0.0"
+  }
+}
