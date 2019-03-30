@@ -21,8 +21,8 @@ http://guigrpa.github.io/2017/01/01/word-docs-the-relay-way/ .
 ### Run
 #### OPTION 1: As Node server
 
-    git clone https://github.com/jdoleczek/docx-template-to-pdf-microservice.git
-    cd docx-template-to-pdf-microservice
+    git clone https://github.com/jdoleczek/docx-template-to-pdf-microservice-js.git
+    cd docx-template-to-pdf-microservice-js
     npm i
     sudo node server.js
 
@@ -33,8 +33,8 @@ is required to be installed.
 
 #### OPTION 2: With Vagrant
 
-    git clone https://github.com/jdoleczek/docx-template-to-pdf-microservice.git
-    cd docx-template-to-pdf-microservice
+    git clone https://github.com/jdoleczek/docx-template-to-pdf-microservice-js.git
+    cd docx-template-to-pdf-microservice-js
     vagrant up
 
 Then just open http://192.168.0.201/ for an example.
