@@ -9,9 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "docx-templates": "^3.0.0",
-    "express": "^4.16.4",
+    "body-parser": "^1.19.0",
+    "docx-templates": "^3.1.1",
+    "express": "^4.17.1",
     "office-to-pdf": "^4.0.0"
   }
 }
