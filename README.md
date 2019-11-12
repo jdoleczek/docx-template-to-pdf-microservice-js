@@ -26,7 +26,7 @@ http://guigrpa.github.io/2017/01/01/word-docs-the-relay-way/ .
     npm i
     sudo node server.js
 
-Then just open http://localhost/ for an example.
+Then just open http://localhost:8000/ for an example.
 
 For this option **soffice** (LibreOffice) program
 is required to be installed.
@@ -37,8 +37,18 @@ is required to be installed.
     cd docx-template-to-pdf-microservice-js
     vagrant up
 
-Then just open http://192.168.0.201/ for an example.
+Then just open http://192.168.0.201:8000/ for an example.
 You may change IP in Vagrant file.
+
+#### OPTION 3: With Docker
+    
+    git clone https://github.com/jdoleczek/docx-template-to-pdf-microservice-js.git
+    cd docx-template-to-pdf-microservice-js
+    docker-compose up
+
+Then just open http://192.168.99.100:8000/ for an example.
+You may need to change the IP depending on how docker is set up on your machine.
+
 
 #### Rest API description
 
