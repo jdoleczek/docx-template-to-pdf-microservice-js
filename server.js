@@ -23,7 +23,7 @@ function createReportPromise(req) {
   });
 }
 
-app.post('/docx', (req, res) => {
+app.post('/docx/docx', (req, res) => {
   createReportPromise(req)
   .then(buffer => {
     res.json({
