@@ -52,7 +52,7 @@ You may need to change the IP depending on how docker is set up on your machine.
 
 #### Rest API description
 
-There is only one **POST** end-point: **/docx/pdf**
+There are two **POST** end-points: **/docx/docx** (returns docx file) and **/docx/pdf** (returns PDF file)
 that accepts JSON data in format:
 
     {
@@ -66,7 +66,7 @@ In return we get also JSON:
 
     {
       status: 'ok',
-      file: '...PDF file encoded with Base64...'
+      file: '...PDF or DOCX file encoded with Base64...'
     }
 
 ##### Example
